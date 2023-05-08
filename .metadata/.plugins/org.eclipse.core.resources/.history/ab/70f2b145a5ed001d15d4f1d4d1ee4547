@@ -1,0 +1,25 @@
+// Chef agent in restaurant system
+
+/* Initial beliefs and rules */
+
+/* Initial goals */
+
+/* Plans */
+
++start: true <- .print("Kitchen is open!").
+
++cook(Menu, SeatNo)[source(Waiter)]: true <-
+	.print("Received order: ", Menu, " from customer on seat ", SeatNo, "Start cooking...");  // how to walk to the kitchen
+	.print("Send Successfully!").	
+	
+	
+// trigger through environment
++cookdone(Customer, Count): true <-
+	?location(Customer, TableNumber);
+	.print("finished cook for customer ", Customer," at table ", TableNumber);
+	.send(waiter, tell, finish(Customer, TableNumber, Count)).
+//send: Waiter: same as the source; waiter2: the name of the waiter agent
+
++pickedup(Customer, TableNumber)[source(Waiter)]: true <-
+	.print(Customer, TableNumber);
+	.send(Waiter, tell, deliever(Customer, TableNumber)).

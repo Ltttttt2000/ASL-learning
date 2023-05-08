@@ -1,0 +1,35 @@
+// Agent frontdesk in project coursework
+
+/* Initial beliefs and rules */
+threshold(frontdesk, 4).
+
+
+
+/* Initial goals */
+!open.
+/* Plans */
++!open: true <-
+	.print("Start running the restaurant!");
+	.broadcast(tell, start).
+	
+	
+// welcome the customer and allocate seat for them
++welcome(Number)[source(Customer)]: threshold(Agent, Min) & Number>=Min <-
+	var PrivateNumber = 2;
+	.print("Welcome to our restaurant!, Please seat at private room.");
+	.send(Customer, tell, sitdown(PrivateNumber)).	
+
++welcome(Number)[source(Customer)]: threshold(Agent, Min) & Number<Min <-
+	var CommonNumber = 1;
+	.print("Welcome to our restaurant!, Please seat at common room.");
+	.send(Customer, tell, sitdown(CommonNumber)).
+	
+	
++paybill(TableNumber)[source(Customer)]: true <-
+	.print("Table ", TableNumber, "pay their bill");
+	.send(waiter, tell, clean(TableNumber));
+	.print("Thank you your payment, have a nice day");
+	.send(Customer, tell, bye).
+	
+//+done[source(Waiter)]: true <-
+//	.send(Waiter, tell, rest2).

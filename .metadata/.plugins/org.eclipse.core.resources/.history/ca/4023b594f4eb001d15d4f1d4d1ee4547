@@ -1,0 +1,42 @@
+MAS coursework {
+
+	infrastructure: Centralised
+	// Target: add environment 4.30 waiter's location (waiter, customer, chef)
+	environment: coursework.MyEnvironment
+	/*
+	 * Tong LIU 2247664
+	 
+	 This is a multi-agent Intelligent Restaurant System, agents are customer, waiter and chef.
+	 * The customer order their menu first, the waiter receive the order, then tell the chef,
+	 * after the chef finish the order,  they tell the waiter
+	*/
+
+	agents:
+
+		// tong customer[beliefs="order(fish, 9)", goals="startorder"];
+		//error when at the same time.
+		
+		tong customer[beliefs="number(2)", goals="enter"];
+		alice customer[beleifs="number(5)", goals="enter"];
+//		c2 customer[beliefs="order(beef), number(5)", goals="enter"];
+
+//		tong customer[goals="enter"];  // add the order to percept
+//		smithfamily customer[beliefs="number(2), seated(2)", goals="startorder"];
+//		ownfamily customer[beliefs="number(6), order(fish), seated(3)", goals="startorder"];
+
+// 		liufamily customer[beliefs="number(6), seated(1)", goals="specialorder"];
+//		tong customer[beliefs="order(fish), seated(9)", goals="startorder"];
+//		alice customer;
+//		bob customer;
+// resolve: merge the two functinos with recommendation, but the recommendation can be rejected!
+
+
+		waiter waiter;  // order, serve, clean
+		frontdesk frontdesk;   //welcome, pay
+		chef chef;
+		
+		
+
+	aslSourcePath:
+		"src/asl";
+}

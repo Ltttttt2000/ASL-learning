@@ -1,0 +1,225 @@
+package coursework;
+
+
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.PrintStream;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import javax.swing.JTextField;
+
+
+import jason.asSyntax.ASSyntax;
+import jason.asSyntax.Literal;
+import jason.asSyntax.parser.ParseException;
+import jason.asSyntax.parser.TokenMgrError;
+
+
+public class MyWindow extends JFrame{
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	MyEnvironment myEnv;  
+    String[] myAgents;
+
+    DefaultListModel<Literal> perceptListModel;
+    JComboBox<String> agentComboBox;
+    JComboBox<String> agentComboBox2;
+    JComboBox<String> agentComboBox3;
+    
+    JLabel label = new JLabel("Welcome!");
+    JButton order = new JButton("Order");
+    JButton finish_button = new JButton("Pay");
+    JButton cookdone = new JButton("Finished Cook");
+    JButton call_button = new JButton("Call waiter");
+  
+    JTextField inputMenu = new JTextField("",20);
+
+    JPanel buttons = new JPanel();
+    JPanel input = new JPanel();
+    JPanel kitchen = new JPanel();
+    
+    JPanel title = new JPanel();
+    JPanel start = new JPanel();
+    JPanel middle = new JPanel();
+    JPanel end = new JPanel();
+    
+    
+   
+    
+    public MyWindow(MyEnvironment env, String[] agents) {
+    	super("Intelligent Restaurant");  // Inherit parent class with title
+    	myEnv = env;
+    	String[] myAgents= agents;
+    	
+    	
+    	agentComboBox = new JComboBox<String>(myAgents);   // To call waiter and order
+    	agentComboBox2 = new JComboBox<String>(myAgents);  // To indicate the chef is finish order
+    	agentComboBox3 = new JComboBox<String>(myAgents);  // Pay
+    	
+    	// After choose the combobox will refresh
+    	agentComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				@SuppressWarnings("unchecked")
+				JComboBox<String> eComboBox = (JComboBox<String>) e.getSource();
+				String agent = (String) eComboBox.getSelectedItem();
+				refreshPerceptList(agent);
+			}
+    	});
+    	agentComboBox2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				@SuppressWarnings("unchecked")
+				JComboBox<String> eComboBox = (JComboBox<String>) e.getSource();
+				String agent = (String) eComboBox.getSelectedItem();
+				refreshPerceptList(agent);
+			}
+    	});
+    	agentComboBox3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				@SuppressWarnings("unchecked")
+				JComboBox<String> eComboBox = (JComboBox<String>) e.getSource();
+				String agent = (String) eComboBox.getSelectedItem();
+				refreshPerceptList(agent);
+			}
+    	});
+    	
+//    	perceptListModel = new DefaultListModel<Literal>();
+//    	String agent = (String) agentComboBox.getSelectedItem();
+//    	refreshPerceptList(agent);
+//    	
+    	
+        call_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                label.setText("Finished");
+                Literal percept;
+				try {
+					//"startorder(tong, beef)";				
+					String agent = (String) agentComboBox.getSelectedItem();
+//					System.out.println("!!!!!!!!!!!!!!!!!" + agent);
+					String perceptText = "callwaiter(" + agent + ")";
+					percept = ASSyntax.parseLiteral(perceptText);
+					myEnv.addPercept(percept);  // after add this percept, trigger the goals
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TokenMgrError e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}       
+            }
+        });
+    	order.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                label.setText("Received Order!");
+                Literal percept;
+				try {
+					//"startorder(tong, beef)";
+					String agent = (String) agentComboBox.getSelectedItem();
+					
+					String perceptText = "startorder(" + agent + ", " + inputMenu.getText() + ")";
+					percept = ASSyntax.parseLiteral(perceptText);
+					inputMenu.setText("");
+					myEnv.addPercept(percept);  // after add this percept, trigger the goals
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TokenMgrError e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}       
+            }
+        });
+        
+
+        
+        cookdone.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                label.setText("Finished cook");
+                Literal percept;
+				try {
+					//"startorder(tong, beef)";
+					String agent = (String) agentComboBox2.getSelectedItem();
+					String perceptText = "cookdone(" + agent + ")";
+					percept = ASSyntax.parseLiteral(perceptText);
+					myEnv.addPercept(percept);  // after add this percept, trigger the goals
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TokenMgrError e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}       
+            }
+        });
+        finish_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                label.setText("Pay");
+                Literal percept;
+				try {
+					//"startorder(tong, beef)";
+					String agent = (String) agentComboBox3.getSelectedItem();
+					String perceptText = "pay(" + agent + ")";
+					percept = ASSyntax.parseLiteral(perceptText);
+					myEnv.addPercept(percept);  // after add this percept, trigger the goals
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TokenMgrError e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}       
+            }
+        });
+        
+        title.add(label);
+        start.add(agentComboBox);
+        start.add(call_button);
+        start.add(inputMenu);
+        start.add(order);
+        
+        middle.add(agentComboBox2);
+        middle.add(cookdone);
+        
+        end.add(agentComboBox3);
+        end.add(finish_button);
+        
+        
+        getContentPane().add(title);
+        getContentPane().add(start);
+        getContentPane().add(middle);
+        getContentPane().add(end);
+
+        getContentPane().setLayout((LayoutManager) new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setSize(600, 300);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //close all
+        setVisible(true);
+    }
+
+    
+    private void refreshPerceptList(String agent) {
+        perceptListModel.removeAllElements();
+        for (Literal p : myEnv.consultPercepts(agent)) {
+            perceptListModel.addElement(p);
+        }
+    }
+
+
+}

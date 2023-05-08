@@ -1,0 +1,20 @@
+MAS coursework {
+
+	infrastructure: Centralised
+	// Target: add environment to record the location of waiter and customer
+	environment: coursework.MyEnvironment
+
+	agents:
+
+		waiter waiter;  // order, serve, clean
+		frontdesk frontdesk;   //welcome, pay
+		chef chef;    // kitchen
+		tong customer[beliefs="number(2)", goals="enter"];
+		c2 customer[beliefs="number(5)", goals="enter"];
+
+
+
+
+	aslSourcePath:
+		"src/asl";
+}

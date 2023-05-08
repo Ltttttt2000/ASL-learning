@@ -1,0 +1,12 @@
+MAS examples {
+
+    infrastructure: Centralised
+
+    agents:
+        librarian agent_librarian;
+        borrower1 agent_borrower("borrower1");
+        borrower2 agent_borrower("borrower2");
+
+    aslSourcePath:
+        "src/asl";
+}

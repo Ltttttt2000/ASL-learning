@@ -1,0 +1,29 @@
+MAS coursework {
+
+	infrastructure: Centralised
+	// Target: add environment 4.30 waiter's location (waiter, customer, chef)
+	environment: coursework.MyEnvironment
+	/*
+	 * Tong LIU 2247664
+	 
+	 This is a multi-agent Intelligent Restaurant System, agents are customer, waiter and chef.
+	 * The customer order their menu first, the waiter receive the order, then tell the chef,
+	 * after the chef finish the order,  they tell the waiter
+	*/
+
+	agents:
+
+		
+//		tong customer[beliefs="number(2)", goals="enter"];
+		c2 customer[beliefs="number(5)", goals="enter"];
+
+
+		waiter waiter;  // order, serve, clean
+		frontdesk frontdesk;   //welcome, pay
+		chef chef;    // kitchen
+		
+		
+
+	aslSourcePath:
+		"src/asl";
+}

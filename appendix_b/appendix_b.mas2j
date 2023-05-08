@@ -1,0 +1,30 @@
+MAS appendix_b {
+
+    infrastructure: Centralised
+    /* 
+    // Step 1: no message because alice and bob are purely reactive, 
+    // a belief is never added or deleted from their belief.
+    environment: appendix_b.MyEnvironment
+
+    agents:
+        alice interface_agent;
+        bob interface_agent;
+    */ 
+    // Step 2-4: use existing Java widget toolkit such as Swing or SWT
+    // Swing interface
+    environment: appendix_b.MyEnvironment2
+
+    agents:
+        alice interface_agent;
+        bob interface_agent;    
+         
+    // Step 5: Javalin API server, run a web server HTTP requests, GET POST
+//    environment: appendix_b.MyEnvironment3
+//
+//    agents:
+//        alice interface_agent;
+//        bob interface_agent;  
+
+    aslSourcePath:
+        "src/asl";
+}

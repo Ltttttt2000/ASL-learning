@@ -1,0 +1,87 @@
+// Customer agent in restaurant system
+
+/* Initial beliefs and rules */
+
+/* Initial goals */
+//!start.
+/* Plans */
+//+!start[source(self)]: .my_name(Agent) <- allocate(Agent, entrance).
++location(Agent, Location) : .my_name(Agent) <- .print("I am at ", Location).
+// belief, goals defined in the mas2j
++!enter: number(Number) &.my_name(Agent) <-    //get the number of customers from initial belief
+//	allocate(Agent, entrance);
+	.wait(5000);
+	?location(Agent, Location);   // walk to the frontdesk
+	.wait(2000);
+	walk(Location, frontdesk);
+	.print("I'm hungry now... is there any space available?");
+	.send(frontdesk, tell, welcome(Number)).  // tell frontdesk and get where to seat.
+//	.broadcast(tell, welcome(Number)).   // to all waiters(only one) tell 可以用但是会告诉所有的waiter执行 askOne不能执行 askAll不能执行
+	
+	
+//+order(Attribute, Value)[source(percept)] : true <- .print("I observe the ", Attribute, " is ", Value).
+
+// the customer sit down based on the TableNumber
++sitdown(TableNumber)[source(Frontdesk)]: true <-   
+	.print("Thank you, sitting...");   // how to add percept
+	?location(Agent, Location);
+	.wait(2000);
+	walk(Location, TableNumber);
+	.print("Let's consider the menu'").
+
++callwaiter(Agent)[source(percept)]: true<-
+	.print("I have prepared to order!");
+	?location(Agent, Location);
+	.print("my location is ", Location);
+	.send(waiter, tell, calling(Location)).
+
+// after considering the menu, input the food name through GUI and trigger the event.	
++startorder(Agent, Menu)[source(percept)]: true <-
+	.print("I want to order ", Menu);
+	?location(Agent, Location);
+	.send(waiter, tell, receiveorder(Menu, Location)).  // get the number and TableNumber
+	
+	
+//+startorder(TableNumber)[source(Waiter)]: order(Menu) & number(Number) <-
+//	.print("I want to order ", Menu);
+//	.send(Waiter, tell, receiveorder(Menu, TableNumber)).
+
+//+!startorder: number(Number) & seated(SeatNo) <-
+//	.print("What special for your restaurant?");
+//	.send(waiter, tell, recommend(Number, SeatNo)).
+	
++eat(Menu)[source(Waiter)]: true <- 
+	.print("Delicious food! Thank you!");
+	?location(Agent, Location)
+	.send(Waiter, tell, back(Location)).
+
+
+// trigger from GUI button
++pay(Agent)[source(percept)]: true<-
+	?location(Agent, Location);
+	walk(Location, frontdesk);
+	.print("finish the food, I want to pay");
+	.send(frontdesk, tell, paybill(Location)).
+
++bye[source(frontdesk)]: true <-
+	.print("Thanks! Bye!");
+	?location(Agent, Location);
+	walk(Location, entrance).
+//+receiverecommend(Menu, SeatNo)[source(Waiter)]: true <-
+//	+order(Menu);
+//	.print("accept recommendation!");
+//	.print("I want to order ", Menu, " and I seat at ",  SeatNo);
+//	.send(Waiter, tell, receive_familyorder(Menu, SeatNo)).
+//	
+
+// if-else语句 若有自己的Menu则拒绝推荐
+//+receiverecommend(Recommend, SeatNo)[source(Waiter)]: order(Menu) <-
+//	.print("Sorry I have my own choice!");
+//	.print("I want to order ", Menu, " and I seat at ",  SeatNo);
+//	.send(Waiter, tell, receiveorder(Menu, SeatNo)).
+//	
+//+receiverecommend(Recommend, SeatNo)[source(Waiter)]: true<-
+//	.print("accept recommendation!");
+//	.print("I want to order ", Recommend, " and I seat at ",  SeatNo);
+//	.send(Waiter, tell, receiveorder(Recommend, SeatNo));
+//	.print("Ordering....").

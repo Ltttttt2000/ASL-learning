@@ -1,0 +1,17 @@
+MAS hello_world_lt {
+
+	infrastructure: Centralised
+
+	agents:
+		// agent11 robot_11;
+		// agent_16 robot_16;
+		// agent15 robot_15;
+		// agent14 robot_14;
+		// agent13 robot_13;
+		agent_robot robot;
+		// agent2 family_tree;
+		// agentname sample_agent;
+
+	aslSourcePath:
+		"src/asl";
+}

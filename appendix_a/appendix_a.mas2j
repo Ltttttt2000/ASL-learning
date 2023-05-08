@@ -1,0 +1,26 @@
+MAS appendix_a {
+
+	infrastructure: Centralised
+	// Step 1-5
+	 // environment: appendix_a.MyEnvironment  // instantiate the virtual environment
+	// Step 6
+	environment: appendix_a.MyEnvironment2
+	// Step 7: use corresponding method with executeAction add/remove percept
+	// environment: appendix_a.MyEnvironment3
+	agents:
+		
+		/* 
+		// Step 3: source percept annotations, in java file adepercept
+		alice environment_agent [beliefs="weather(tempature, cold)"];
+		bob environment_agent;  //若没有定义beliefs则使用percept
+		*/
+		// Step 6 -7:  全部用到percept里的belief
+		// 环境到意义在于一个代理到动作会影响整体的环境，不仅仅是一个agent使用的。
+		alice environment_agent2;
+		bob environment_agent2;		
+		
+		// Step 8:
+		// alice environment_agent3;
+	aslSourcePath:
+		"src/asl";
+}

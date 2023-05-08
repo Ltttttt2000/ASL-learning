@@ -1,0 +1,19 @@
+MAS water {
+
+	infrastructure: Centralised
+
+	agents:
+		sensor humidSensor;
+		robot waterRobot;
+		
+
+
+	aslSourcePath:
+		"src/asl";
+}
+
+/*
+ * + plan 的主动执行，条件满足后主动执行
+ * +? 条件满足时不执行，等其他agent或者外部的通知
+ * +! 广播执行 broadcast/send
+ */

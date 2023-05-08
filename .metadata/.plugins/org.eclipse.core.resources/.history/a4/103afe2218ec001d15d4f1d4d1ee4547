@@ -1,0 +1,20 @@
+package coursework;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.swing.JTextArea;
+
+public class CustomOutputStream extends OutputStream {
+    private JTextArea textArea;
+    
+    public CustomOutputStream(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+    
+    @Override
+    public void write(int b) throws IOException {
+        textArea.append(String.valueOf((char) b));  // 将输出写入到JTextArea组件中
+        textArea.setCaretPosition(textArea.getDocument().getLength());  // 将光标定位到文本末尾
+    }
+}

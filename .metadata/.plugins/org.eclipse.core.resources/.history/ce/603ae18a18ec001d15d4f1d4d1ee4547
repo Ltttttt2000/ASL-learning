@@ -1,0 +1,18 @@
+package coursework;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.swing.JTextArea;
+
+class ConsoleOutputStream extends OutputStream {
+    public ConsoleOutputStream(JTextArea textArea) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void write(int b) throws IOException {
+        consoleArea.append(String.valueOf((char)b));
+        consoleArea.setCaretPosition(consoleArea.getDocument().getLength());
+    }
+}
+

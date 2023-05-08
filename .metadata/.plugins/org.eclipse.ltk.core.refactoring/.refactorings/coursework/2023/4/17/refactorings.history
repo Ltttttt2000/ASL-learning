@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;coursework/src/asl/sample_agent.asl&apos; to &apos;customer.asl&apos;" description="Rename resource &apos;sample_agent.asl&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/asl/sample_agent.asl" name="customer.asl" stamp="1682691727451" updateReferences="true"/>
+</session>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;multi_agent/src/asl/folliwer.asl&apos; to &apos;follower.asl&apos;" description="Rename resource &apos;folliwer.asl&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/asl/folliwer.asl" name="follower.asl" stamp="1679401305050" updateReferences="true"/>
+</session>

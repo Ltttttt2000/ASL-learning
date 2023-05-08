@@ -1,0 +1,92 @@
+package coursework;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import jason.asSyntax.ASSyntax;
+import jason.asSyntax.Literal;
+import jason.asSyntax.Structure;
+import jason.asSyntax.parser.ParseException;
+import jason.environment.Environment;
+
+public class MyEnvironment extends Environment {
+
+    @Override
+    public void init(String[] args) {
+    	//String[] agents = {"alice", "bob"};
+    	String[] agents = {"c2", "tong"};
+    	//MyWindow window = new MyWindow(this, agents);   //能有一个GUI但是是分离的
+    	//window.paintComponents(null);
+    	
+
+        JFrame frame = new JFrame("Intelligent Restaurant");
+        JPanel mypanel = new MyWindow(this, agents);
+        mypanel.setBounds(0,0,800,600);
+        frame.getContentPane().add(mypanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //设置窗体的大小
+        //frame.setSize(800, 600);
+    	frame.setLayout(null);
+    	//绝对定位窗体的位置和大小
+    	frame.setBounds(0,0,800,600); 
+        frame.setLocationRelativeTo(null);
+        //设置窗体可见
+        frame.setVisible(true);
+        
+
+        try { // defined the location individually for each agent 
+        	// has not been added.
+        	
+            this.addPercept(ASSyntax.parseLiteral("location(waiter, frontdesk)"));
+            this.addPercept(ASSyntax.parseLiteral("location(tong, entrance)"));
+            this.addPercept(ASSyntax.parseLiteral("location(c2, entrance)"));
+
+            // 加一个设定使其打上busy的标签
+            this.addPercept(ASSyntax.parseLiteral("isbusy(waiter, no)"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean executeAction(String agentName, Structure environmentAction) {
+        try {
+            String functor = environmentAction.getFunctor();
+            if(functor.equals("allocate") && environmentAction.getArity() == 2) {
+//            	System.out.println("allocating............");
+            	System.out.println("location(" + environmentAction.getTerm(0) + ", " + environmentAction.getTerm(1) + ")");
+            	this.addPercept(ASSyntax.parseLiteral("location(" + environmentAction.getTerm(0) + ", " + environmentAction.getTerm(1) + ")"));
+            	return true;
+            }
+            if ( functor.equals("work") && environmentAction.getArity() == 2 ) {
+            	Literal locationBefore = ASSyntax.parseLiteral("isbusy(" + agentName + ", " + environmentAction.getTerm(0) + ")");
+            	System.out.println("isbusy(" + agentName + ", " + environmentAction.getTerm(0) + ")");
+                this.removePercept(locationBefore);
+                this.addPercept(ASSyntax.parseLiteral("isbusy(" + agentName + ", " + environmentAction.getTerm(1) + ")"));
+                return true;
+            }
+            if ( functor.equals("free") && environmentAction.getArity() == 2 ) {
+            	Literal locationBefore = ASSyntax.parseLiteral("isbusy(" + agentName + ", " + environmentAction.getTerm(0) + ")");
+                this.removePercept(locationBefore);
+                this.addPercept(ASSyntax.parseLiteral("isbusy(" + agentName + ", " + environmentAction.getTerm(1) + ")"));
+                return true;
+            }
+            if ( functor.equals("walk") && environmentAction.getArity() == 2 ) {
+                System.out.println("> " + agentName + " is executing environment action " + environmentAction);
+				  // create a locationBefore using the current location.
+                Literal locationBefore = ASSyntax.parseLiteral("location(" + agentName + ", " + environmentAction.getTerm(0) + ")");
+                this.removePercept(locationBefore);
+                this.addPercept(ASSyntax.parseLiteral("location(" + agentName + ", " + environmentAction.getTerm(1) + ")"));
+                System.out.println("location(" + agentName + ", " + environmentAction.getTerm(1) + ")");
+                return true;
+            } else {
+                System.err.println("> " + agentName + " is attempting to execute unknown environment action " + environmentAction);
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+}

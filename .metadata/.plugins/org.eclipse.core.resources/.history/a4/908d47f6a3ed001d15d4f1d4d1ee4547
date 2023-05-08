@@ -1,0 +1,8 @@
+The Intelligent Restaurant System
+Agent: customer, waiter, chef, frontdesk
+## Function of each agents
+How to use the project
+Run the Jason project, this project define two group of customer: c2 and tong, they can eat in the restaurant in the same time (considering conflict) 
+and in the different time(run separately).
+1. Run different time
+in coursework.mas2j

@@ -1,0 +1,117 @@
+The Intelligent Restaurant System
+Agent: customer, waiter, chef, frontdesk
+## Function of each agents
+How to use the project
+Run the Jason project, this project define two group of customer: c2 and tong, they can eat in the restaurant in the same time (considering conflict) 
+and in the different time(run separately).
+1. Run different time
+in the mas2j file, give the initial belief of each customer, the time(Time) is about the time for customer to enter the restaurant.
+set a longer time for tong to let it enter slowly, assume they will not eat at the same time as c2 customer. For example, let 
+tong customer[beliefs="number(2), time(20000)", goals="enter"], so it will wait for 20 seconds to enter the restaurant.
+
+Show the functions of each customer, choose c2 first, after c2 sit down, click call waiter button to call the waiter and start order, after input the 
+food name in the input textfield, click order to process an order. The waiter will walk to kitchen to tell chef.
+After the chef finished for the order, click cookdone button to tell the waiter pick up and deliever the c2's order.
+Then, after c2 finished, c2 will walk to the frontdesk to pay, while frontdesk tell waiter to clean this area.
+tong customer have the same process as c2.
+The process should be 
+
+
+```
+Jason Http Server running on http://127.0.0.1:3272
+[waiter] I am at frontdesk
+[frontdesk] Start running the restaurant!
+[waiter] Waiter working time!
+[chef] Kitchen is open!
+[c2] We have 5 people, we are hungary....
+[tong] We have 2 people, we are hungary....
+>>>>>>>>>>>>>>c2 is walking from Location to frontdesk
+[c2] Hi, is there any space available?
+[frontdesk] Welcome to our restaurant!, Please seat at private room.
+[c2] I have prepared to order!
+>>>>>>>>>>>>>>c2 is walking from frontdesk to 2
+[c2] Already sit down, start considering the order....
+>>>>>>>>>>>>>>waiter is walking from frontdesk to frontdesk
+[waiter] Yes, what would you like to order?
+[c2] I want to order beef
+[waiter] Please wait for a moment
+>>>>>>>>>>>>>>waiter is walking from 2 to kitchen
+[waiter] I am at kitchen
+>>>>>>>>>>>>>>waiter is walking from kitchen to frontdesk
+[chef] Received order: beef from customer on seat 2Start cooking...
+[chef] Send Successfully!
+[chef] finished cook for customer c2 at table 2
+>>>>>>>>>>>>>>waiter is walking from frontdesk to kitchen
+[waiter] I am at kitchen
+[waiter] Pick up order for c2
+>>>>>>>>>>>>>>waiter is walking from kitchen to 2
+[waiter] I am at 2
+[waiter] chef has already finished your menu
+[c2] Delicious food! Thank you!
+[waiter] Enjoy!
+>>>>>>>>>>>>>>waiter is walking from 2 to frontdesk
+[waiter] I am at frontdesk
+>>>>>>>>>>>>>>c2 is walking from 2 to frontdesk
+[c2] finish the food, I want to pay
+[frontdesk] Thank you your payment, have a nice day
+[frontdesk] Clean Table 2
+[c2] Thanks! Bye!
+>>>>>>>>>>>>>>c2 is walking from frontdesk to entrance
+[waiter] Got it! Start cleaning
+>>>>>>>>>>>>>>waiter is walking from frontdesk to 2
+[waiter] I am at 2
+[waiter] Finished cleaning Table 2
+>>>>>>>>>>>>>>waiter is walking from 2 to frontdesk
+[waiter] I am at frontdesk
+>>>>>>>>>>>>>>tong is walking from Location to frontdesk
+[tong] Hi, is there any space available?
+[frontdesk] Welcome to our restaurant!, Please seat at common room.
+>>>>>>>>>>>>>>tong is walking from frontdesk to 1
+[tong] Already sit down, start considering the order....
+[tong] I have prepared to order!
+>>>>>>>>>>>>>>waiter is walking from frontdesk to 1
+[waiter] I am at 1
+[waiter] Yes, what would you like to order?
+[tong] I want to order fish
+[waiter] Please wait for a moment
+>>>>>>>>>>>>>>waiter is walking from 1 to kitchen
+[waiter] I am at kitchen
+>>>>>>>>>>>>>>waiter is walking from kitchen to frontdesk
+[chef] Received order: fish from customer on seat 1Start cooking...
+[chef] Send Successfully!
+[waiter] I am at frontdesk
+[chef] finished cook for customer tong at table 1
+>>>>>>>>>>>>>>waiter is walking from frontdesk to kitchen
+[waiter] I am at kitchen
+[waiter] Pick up order for tong
+>>>>>>>>>>>>>>waiter is walking from kitchen to 1
+[waiter] I am at 1
+[waiter] chef has already finished your menu
+[tong] Delicious food! Thank you!
+[waiter] Enjoy!
+>>>>>>>>>>>>>>waiter is walking from 1 to frontdesk
+[waiter] I am at frontdesk
+>>>>>>>>>>>>>>tong is walking from 1 to frontdesk
+[tong] finish the food, I want to pay
+[frontdesk] Thank you your payment, have a nice day
+[frontdesk] Clean Table 1
+[tong] Thanks! Bye!
+[waiter] Got it! Start cleaning
+>>>>>>>>>>>>>>tong is walking from frontdesk to entrance
+>>>>>>>>>>>>>>waiter is walking from frontdesk to 1
+[waiter] I am at 1
+[waiter] Finished cleaning Table 1
+>>>>>>>>>>>>>>waiter is walking from 1 to frontdesk
+[waiter] I am at frontdesk
+
+```
+![tong start order after c2 finished](/coursework/1-1.png "Without conflict")
+
+
+2. With conflict, c2 and tong enter the restaurant at the same time, make a slight time different, for example, set
+tong customer[beliefs="number(2), time(1000)", goals="enter"].
+
+When c2 is order, tong cannot call waiter because waiter is busy, in the rule, set waiter is busy when it executing actions, after waiter back to frontdesk,
+it is not busy, if the waiter is busy and received some message, it will say call it later, the action should be triggered later by clicking the button again.
+
+

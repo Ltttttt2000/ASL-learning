@@ -1,0 +1,79 @@
+// Waiter agent in restaurant system
+
+/* Initial beliefs and rules */
+location(waiter, frontdesk).
+
+busy(X):- location(X, Y) & Y \== frontdesk.
+free(X):- location(X, Y) & Y == frontdesk.
+/* Initial goals */
+
+/* Plans */
++start: true <- .print("Waiter working time!").
+
+//+location(Agent, Location)[source(percept)] : .my_name(Agent) <- .print("I am at ", Location).
+
++calling(SeatNo)[source(Customer)]: .my_name(Agent) & not busy(Agent)<-
+	//allocate(Agent, frontdesk);  // solve the location error problem
+	.wait(2000);
+	?location(Agent, Location);
+	walk(Location, SeatNo);
+	.print("Yes, what would you like to order?").  // wait for input	
+
+
+
++calling(SeatNo)[source(Customer)]: .my_name(Agent)& busy <-
+	.print("I am busy now, please wait for a moment").
+  	
+  	
++receiveorder(Menu, SeatNo)[source(Customer)]: true <-
+	.print("Please wait for a moment");
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, kitchen);
+	.send(chef, tell, cook(Menu, SeatNo));
+	walk(kitchen, frontdesk).
+
+	
++finish(Customer, SeatNo)[source(Chef)]:  true <-
+	.wait(1000);
+	?location(Agent, Location);	
+	.print("NOW _____________-", Location);
+	walk(Location, kitchen);
+	.print("Pick up order for ", Customer);
+	.send(Chef, tell, pickedup(Customer, SeatNo)).
+	
++deliever(Customer, SeatNo)[source(Chef)]: true <-
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, SeatNo);	
+	.print(Chef, " has already finished your menu");
+	.send(Customer, tell, eat(Menus)).
+	
+
++back: true <-   // can execute second time
+	.print("Enjoy!");
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, frontdesk).
+	
++restwaiter: true <-   // can execute second time
+	.print("Executing...........");
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, frontdesk).
+	
+
++clean(SeatNo)[source(frontdesk)]: true <-
+	.print("Got it! Start cleaning");
+	?location(waiter, Location);
+	walk(Location, SeatNo);
+	.wait(5000);
+	.print("Finished cleaning Table ", SeatNo).
+//	.send(frontdesk, tell, done).
+	
++rest2: true <-    
+	.wait(1000);
+	?location(Agent, Location);
+	walk(Location, frontdesk);
+	.print("_______________________").
+

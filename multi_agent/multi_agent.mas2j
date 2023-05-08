@@ -1,0 +1,78 @@
+MAS multi_agent {
+
+  infrastructure: Centralised
+  //all agents share same Jason console. no specific order
+  agents:
+
+  /* 
+  	// Step 1: Jason doesn't guarantee agent1 always execute before agent2.
+  	agent1 sample_agent;
+  	agent2 sample_agent;
+  	
+  	// Step 2: Numbered agents of the same type, agent1, agent2,..agent5.
+  	agent sample_agent #5;
+  	
+  	// Step 3: agents of different types
+  	// Now, alice and bob share same initial goals and plans but have different initial beliefs.
+  	alice friend_of_bob;
+  	bob friend_of_alice;
+ 
+  	// Step 4: Initial base beliefs as parameters, input X from mas2j.
+  	alice friend [beliefs="friend(bob)"];
+  	bob friend [beliefs="friend(alice)"];
+  	
+  	// Step 5: Initial achievement goals as parameters
+  	alice friend2 [beliefs="friend(bob)", goals="start"];
+  	bob friend2 [beliefs="friend(alice)", goals="start"];
+  	 
+  	// Step 6: Jason annotations
+  	alice meta;
+  	bob meta2;
+  	
+  	// Step 7: broadcast communication actions, .broadcast(tell,b)
+  	// an agent wants to communicate some belief to all other agents in the Jason project
+  	alice leader;
+  	bob follower;
+  	carol follower;
+  	dave follower;
+  	
+  	// Step 8: direct communications actions
+  	alice leader2;
+  	bob follower2;
+  	carol follower2;
+  	dave follower2;  	
+  	
+  	// Step 9: source annotations
+  	alice leader3;
+  	bob follower3;
+  	carol follower3;
+  	dave follower3;  
+  	
+  	
+  	// Step 11: traders: one buyer
+	alice trader [beliefs="have(apples, 1)", goals="acquire(apples, 5)"]; //buyer
+    bob trader [beliefs="have(apples, 2)"];
+    carol trader [beliefs="have(apples, 3)"];	
+    
+    // Step 12: multiple buyers
+    alice trader [beliefs="have(apples, 1), have(bananas, 2)", goals="acquire(apples, 5)"];
+    bob trader [beliefs="have(apples, 2), have(bananas, 0)", goals="acquire(bananas, 3)"];
+    carol trader [beliefs="have(apples, 3), have(bananas, 2)"];    
+    */
+    
+    // Step 13: Contract Net Protocol
+    alice manager [goals="call_for_proposals(task1, 0), call_for_proposals(task2, 0)"];
+    bob contractor [beliefs="resources(3)"];
+    carol contractor [beliefs="resources(4)"];
+    dave contractor [beliefs="resources(5)"];
+    
+    // Step 14: recolloaction
+    
+    
+
+    
+
+
+  aslSourcePath:
+    "src/asl";
+}

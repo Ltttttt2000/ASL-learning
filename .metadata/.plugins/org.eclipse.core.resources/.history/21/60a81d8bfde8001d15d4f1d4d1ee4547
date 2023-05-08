@@ -1,0 +1,91 @@
+The Intelligent Restaurant System
+Agent: customer, waiter, chef
+## Function of each agents
+
+### customer fist case: individuals with own menu
+>
+startorder: 
+the customer start to order the previous menu defined in the beliefs
+triggered by goals
+>
+```
++!startorder: order(Menu)& seated(SeatNo) <- 
+	.print("I want to order ", Menu, " and I seat at ",  SeatNo);
+	.send(waiter, tell, receiveorder(Menu, SeatNo));
+	.print("Ordering..").
+```
+**待解决：怎么广播给所有的waiter而不是特定的一个**
+
+
+### customer second case: family need recommend
+> specialorder
+the customer need to be recommended by the waiter
+>
+```
++!specialorder: number(Number) & seated(SeatNo) <-
+	.print("What special for your restaurant?");
+	.send(waiter2, tell, recommend(Number, SeatNo)).
+```
+>
+The customer receive the recommendation from the waiter
+
+>
+```
++receiverecommend(Menu, SeatNo)[source(Waiter)]: true <-
+	+order(Menu);
+	.print("accept recommendation!");
+	.print("I want to order ", Menu, " and I seat at ",  SeatNo);
+	.send(Waiter, tell, receive_familyorder(Menu, SeatNo)).
+
+```
+
+### waiter ###
+
+The waiter will recommend the Combo based on the number of family
+When the customer asked for recommendation, the waiter walk to the SeatNo.
+>
+```
++recommend(Number, SeatNo)[source(Customer)]: Number>=5 <-
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, SeatNo);
+	.print("We recommend you the Combo1 ")
+	.send(Customer, tell, receiverecommend("Combo1", SeatNo)).
+
+```
+
+
+>
+after ordered, the waiter walk to the kitchen
+>
+
+```
++receive_familyorder(Menu, SeatNo)[source(Customer)]: true <-
+	?location(Agent, Location);
+	.wait(1000);
+	walk(Location, kitchen);
+	.print("Received order: ", Menu, " from customer ", Customer, " on seat ", SeatNo);
+	.wait(1000);
+	.send(chef, tell, cook(Customer, Menu, SeatNo)).  
+```
+
+### chef ###
+>
+The chef received order from waiter and start cook, after finish, send to waiter
+>
+
+**待解决： 怎么让waiter先回去呆着等待做饭时间**
+```
++cook(Customer, Menu, SeatNo)[source(Waiter)]: true <-
+	.print("start cook for ", Menu);
+	.wait(1000);
+	.print("finished cook for ", Menu);
+	.send(Waiter, tell, finish(Customer, Menu, SeatNo));
+	.print("Tell waiter!").
+	
+```
+
+Can the goals be set in the java file.
+
+
+

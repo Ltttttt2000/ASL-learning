@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;appendix_b.MyEvironment.java&apos; to &apos;MyEnvironment.java&apos;&#x0A;- Original project: &apos;appendix_b&apos;&#x0A;- Original element: &apos;appendix_b.MyEvironment.java&apos;&#x0A;- Renamed element: &apos;appendix_b.MyEnvironment.java&apos;" description="Rename compilation unit &apos;MyEvironment.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/java&lt;appendix_b{MyEvironment.java" name="MyEnvironment.java" references="false" stamp="1682086774858" version="1.0"/>
+</session>

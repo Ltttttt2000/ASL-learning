@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;environment/src/asl/brower.asl&apos; to &apos;borrower.asl&apos;" description="Rename resource &apos;brower.asl&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/asl/brower.asl" name="borrower.asl" stamp="1681917022104" updateReferences="true"/>
+</session>
